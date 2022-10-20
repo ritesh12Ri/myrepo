@@ -5,37 +5,82 @@ const underscore = require('underscore')
 const router = express.Router();
 
 
-router.get('/missing',function(req,res){
- let array = [1,2,3,4,6,7]
- let n = array.length+1   //expected length of the array n=5+1=6
- let expSum = n*(n+1)/2   //expected sum of the array
- let sumOfArr = 0
- for(let i=0; i<array.length; i++){
-    sumOfArr = sumOfArr + array[i]
- }
- let missNo =  expSum - sumOfArr
- console.log(missNo)
- res.send("updated array is" + missNo)
+// ASSIGNMENT:
+// you will be given an array of persons ( i.e an array of objects )..each person will have  a {name: String , age: Number, votingStatus: true/false(Boolean)}
+// take input in query param as votingAge..and for all the people above that age, change votingStatus as true
+// also return an array consisting of only the person that can vote
 
+// WRITE A POST API TO THE ABOVE
+
+
+// take this as sample for array of persons:
+
+let persons = [
+    {
+        name: "PK",
+        age: 10,
+        votingStatus: false
+    },
+    {
+        name: "SK",
+        age: 20,
+        votingStatus: false
+    },
+    {
+        name: "AA",
+        age: 70,
+        votingStatus: false
+    },
+    {
+        name: "SC",
+        age: 5,
+        votingStatus: false
+    },
+    {
+        name: "HO",
+        age: 40,
+        votingStatus: false
+    }
+]
+
+router.post('/hit-me', function (req, res) {
+    let votingAge = req.query.age     // 20
+    // console.log(votingAge)
+
+    let validPersons = persons.filter(x => (x.age >= votingAge))
+
+    validPersons.map(x => x.votingStatus = true)
+
+    res.send({ person: validPersons })
 })
-
-
-
-
-router.get('/missing2',function(req,res){
-let array = [32,33,34,35,37]
-let n = array.length + 1                              // expected length of our array
-let expSum = n*(array[0]+array[array.length -1])/2    // expected sum of the array
-let sumOfArr = array.reduce((x,y) => x + y)           // current array sum
-let miss = expSum - sumOfArr                          // miss no. 36
-// console.log(expSum - sumOfArr)
-res.send("missing no." + miss)
-})
-
 
 module.exports = router;
-// adding this comment for no reason
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// for(let i=0; i<persons.length; i++){
+    //     let newPerson = []
+    //     if(persons[i].age<votingAge){
+    //         newPerson.push(persons[i])
+    //       return res.send("new person is" + newPerson)
+    //     }else{
+    //        return res.send({"message" : "bade ho jao jaldi"})
+    //     }
+    // }
+    
